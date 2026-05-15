@@ -10,6 +10,6 @@ APIs: Open-Meteo Forecast API (https://open-meteo.com/), Open-Meteo Geocoding AP
 
 Contact Email: kcyle@terpmail.umd.edu
 
-Deployed App Link: 
+Deployed App Link: https://parklycmsc330.onrender.com
 
 AI Use: None
