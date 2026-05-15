@@ -13,8 +13,11 @@
       <h1><a href="/">Parkly</a></h1>
       <h2>Bookings for <%= email %></h2>
 
-      <p><%= count %> result<%= count === 1 ? "" : "s" %>.</p>
-
+      <% if (count === 1) { %>
+         <p><%= count %> result.</p>
+      <% } else { %>
+         <p><%= count %> results.</p>
+      <% } %>
       <%- table %>
       <br>
       <a href="/">HOME</a>
