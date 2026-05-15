@@ -14,8 +14,10 @@
    <div id="page">
       <h1><a href="/">Parkly</a></h1>
       <h2>List your driveway</h2>
+
       <form method="POST" action="/spots/list" id="listForm">
          <fieldset>
+
             <legend>Driveway Information</legend>
             Address (Maryland):<br>
             <input name="address" id="addressInput" autocomplete="off" required>
@@ -30,12 +32,14 @@
             Your name: <input name="hostName" required><br><br>
             Description:<br>
             <textarea name="description" rows="3" cols="40"></textarea>
+
          </fieldset>
 
          <fieldset>
             <legend>Location Preview</legend>
             <div id="map"></div>
             <p id="mapStatus">Pick an address above to preview on the map.</p>
+
          </fieldset>
 
          <br>
@@ -44,6 +48,7 @@
       </form>
       <br>
       <a href="/">HOME</a>
+
    </div>
 
    <script>
@@ -74,17 +79,21 @@
       async function lookup() {
          const q = document.getElementById("addressInput").value.trim();
          const list = document.getElementById("acList");
+
          if (q.length < 3) {
             list.innerHTML = "";
             return;
          }
+
          const res = await fetch("/spots/api/suggest?q=" + encodeURIComponent(q));
          const data = await res.json();
          results = data.results;
+
          if (results.length === 0) {
             list.innerHTML = "<div class='ac-empty'>No Maryland matches.</div>";
             return;
          }
+
          let html = "";
          for (let i = 0; i < results.length; i++) {
             html += "<div class='ac-item' onclick='pick(" + i + ")'>" + results[i].label + "</div>";
