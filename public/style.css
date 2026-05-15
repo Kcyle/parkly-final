@@ -1,0 +1,89 @@
+body {
+    background-color: lightcyan;
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    margin: 20px;
+}
+
+h1 a {
+    color: steelblue;
+    text-decoration: none;
+}
+
+a {
+    color: steelblue;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 6px;
+}
+
+th {
+    background-color: steelblue;
+    color: white;
+}
+
+fieldset {
+    margin-bottom: 8px;
+}
+
+legend {
+    color: steelblue;
+    font-weight: bold;
+}
+
+input[type="submit"], input[type="reset"] {
+    background-color: steelblue;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    margin: 3px;
+}
+
+#map {
+    width: 100%;
+    height: 250px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+}
+
+#weatherBox {
+    background-color: lightyellow;
+    padding: 6px;
+    margin: 8px 0;
+}
+
+#mapStatus {
+    color: gray;
+    font-size: 12px;
+}
+
+#acList {
+    max-width: 400px;
+}
+
+.ac-item {
+    background-color: white;
+    border: 1px solid gray;
+    padding: 3px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.ac-item:hover {
+    background-color: lightcyan;
+}
+
+.ac-empty {
+    color: gray;
+    padding: 3px;
+    font-size: 13px;
+}

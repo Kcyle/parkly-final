@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <title>Bookings</title>
+   <link rel="stylesheet" href="/style.css">
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+   <div id="page">
+      <h1><a href="/">Parkly</a></h1>
+      <h2>Bookings for <%= email %></h2>
+      <p><%= count %> result<%= count === 1 ? "" : "s" %>.</p>
+      <%- table %>
+      <br>
+      <a href="/">HOME</a>
+   </div>
+</body>
+
+</html>

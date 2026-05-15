@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <title>Book Spot</title>
+   <link rel="stylesheet" href="/style.css">
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+   <div id="page">
+      <h1><a href="/">Parkly</a></h1>
+      <h2><%= spot.address %></h2>
+      <p>
+         City: <%= spot.city %><br>
+         Price: $<%= spot.price %> / hr<br>
+         Host: <%= spot.hostName %>
+      </p>
+
+      <% if (spot.description) { %>
+         <p><%= spot.description %></p>
+      <% } %>
+
+      <% if (weather) { %>
+         <p id="weatherBox">
+            Weather in <%= spot.city %>: <%= weather.temp %>&deg;F, <%= weather.desc %>
+            <em>(via OpenMeteo)</em>
+         </p>
+      <% } %>
+
+      <% if (coords) { %>
+         <div id="map"></div>
+         <script>
+            "use strict";
+            window.onload = function() {
+               const lat = <%= coords.lat %>;
+               const lon = <%= coords.lon %>;
+               const map = L.map("map").setView([lat, lon], 16);
+               L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+               L.marker([lat, lon]).addTo(map);
+            };
+         </script>
+      <% } %>
+
+      <h3>Reserve this spot</h3>
+      <form method="POST" action="/spots/book/<%= spot._id %>">
+         <fieldset>
+            <legend>Driver Information</legend>
+            Name: <input name="driverName" required><br><br>
+            Email: <input name="driverEmail" type="email" required><br><br>
+            License plate: <input name="plate" required><br><br>
+            Hours: <input name="hours" type="number" min="1" max="48" value="2" required>
+         </fieldset>
+         <br>
+         <input type="reset">
+         <input type="submit" value="Book">
+      </form>
+      <br>
+      <a href="/spots">Back to spots</a>
+   </div>
+</body>
+
+</html>

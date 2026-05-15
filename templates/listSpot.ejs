@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <title>List Your Driveway</title>
+   <link rel="stylesheet" href="/style.css">
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+   <div id="page">
+      <h1><a href="/">Parkly</a></h1>
+      <h2>List your driveway</h2>
+      <form method="POST" action="/spots/list" id="listForm">
+         <fieldset>
+            <legend>Driveway Information</legend>
+            Address (Maryland):<br>
+            <input name="address" id="addressInput" autocomplete="off" required>
+            <div id="acList"></div>
+
+            <input type="hidden" name="city" id="cityInput">
+            <input type="hidden" name="lat" id="latInput">
+            <input type="hidden" name="lon" id="lonInput">
+
+            <br><br>
+            Price per hour ($): <input name="price" type="number" step="1" min="1" required><br><br>
+            Your name: <input name="hostName" required><br><br>
+            Description:<br>
+            <textarea name="description" rows="3" cols="40"></textarea>
+         </fieldset>
+
+         <fieldset>
+            <legend>Location Preview</legend>
+            <div id="map"></div>
+            <p id="mapStatus">Pick an address above to preview on the map.</p>
+         </fieldset>
+
+         <br>
+         <input type="reset">
+         <input type="submit" value="Post listing">
+      </form>
+      <br>
+      <a href="/">HOME</a>
+   </div>
+
+   <script>
+      "use strict";
+
+      let map = null;
+      let marker = null;
+      let timer = null;
+      let results = [];
+
+      window.onload = main;
+
+      function main() {
+         map = L.map("map").setView([39.045, -76.641], 7);
+         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+         document.getElementById("addressInput").oninput = typing;
+         document.getElementById("listForm").onsubmit = check;
+      }
+
+      function typing() {
+         document.getElementById("cityInput").value = "";
+         document.getElementById("latInput").value = "";
+         document.getElementById("lonInput").value = "";
+         clearTimeout(timer);
+         timer = setTimeout(lookup, 400);
+      }
+
+      async function lookup() {
+         const q = document.getElementById("addressInput").value.trim();
+         const list = document.getElementById("acList");
+         if (q.length < 3) {
+            list.innerHTML = "";
+            return;
+         }
+         const res = await fetch("/spots/api/suggest?q=" + encodeURIComponent(q));
+         const data = await res.json();
+         results = data.results;
+         if (results.length === 0) {
+            list.innerHTML = "<div class='ac-empty'>No Maryland matches.</div>";
+            return;
+         }
+         let html = "";
+         for (let i = 0; i < results.length; i++) {
+            html += "<div class='ac-item' onclick='pick(" + i + ")'>" + results[i].label + "</div>";
+         }
+         list.innerHTML = html;
+      }
+
+      function pick(i) {
+         const r = results[i];
+         document.getElementById("addressInput").value = r.address;
+         document.getElementById("cityInput").value = r.city;
+         document.getElementById("latInput").value = r.lat;
+         document.getElementById("lonInput").value = r.lon;
+         if (marker !== null) map.removeLayer(marker);
+         marker = L.marker([r.lat, r.lon]).addTo(map);
+         map.setView([r.lat, r.lon], 17);
+         document.getElementById("mapStatus").innerHTML = "Selected: " + r.label;
+         document.getElementById("acList").innerHTML = "";
+      }
+
+      function check() {
+         if (document.getElementById("latInput").value === "") {
+            document.getElementById("mapStatus").innerHTML = "Please pick an address from the suggestions.";
+            return false;
+         }
+         return true;
+      }
+   </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <title>My Bookings</title>
+   <link rel="stylesheet" href="/style.css">
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+   <div id="page">
+      <h1><a href="/">Parkly</a></h1>
+      <h2>My bookings</h2>
+      <p>Enter the email you booked with.</p>
+      <form method="POST" action="/spots/mybookings">
+         <label>Email: <input name="driverEmail" type="email" required></label>
+         <br><br>
+         <input type="submit" value="Look up">
+      </form>
+      <br>
+      <a href="/">HOME</a>
+   </div>
+</body>
+
+</html>
