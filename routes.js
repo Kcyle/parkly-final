@@ -92,12 +92,24 @@ router.get("/book/:id", async (request, response) => {
          const code = data.current.weather_code;
          let desc = "Unknown";
          if (code === 0) desc = "Clear";
-         else if (code <= 3) desc = "Partly cloudy";
-         else if (code <= 48) desc = "Foggy";
-         else if (code <= 67) desc = "Rain";
-         else if (code <= 77) desc = "Snow";
-         else if (code <= 82) desc = "Showers";
-         else if (code <= 99) desc = "Thunderstorm";
+         else if (code <= 3) {
+            desc = "Partly cloudy";
+         }
+         else if (code <= 48) {
+            desc = "Foggy";
+         }
+         else if (code <= 67) {
+            desc = "Rain";
+         }
+         else if (code <= 77) {
+            desc = "Snow";
+         }
+         else if (code <= 82) {
+            desc = "Showers";
+         }
+         else if (code <= 99) {
+            desc = "Thunderstorm";
+         }
          weather = { temp: Math.round(data.current.temperature_2m), desc: desc };
       }
    }
